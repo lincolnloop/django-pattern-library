@@ -48,7 +48,11 @@
                 </div>
 
                 <div id="tab-2" class="tabbed-content__item">
-                    <pre><code class="code django">{% autoescape off %}{{ pattern_html_source }}{% endautoescape %}</code></pre>
+                    <pre><code class="code html">
+                        {% filter force_escape %}
+                            {{ pattern_html_source }}
+                        {% endfilter %}
+                    </code></pre>
                 </div>
 
                 <div id="tab-3" class="tabbed-content__item">

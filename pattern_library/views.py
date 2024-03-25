@@ -3,7 +3,7 @@ import json
 from django.http import Http404, HttpResponse
 from django.template.loader import render_to_string, get_template
 from django.utils.decorators import method_decorator
-from django.utils.html import escape, format_html
+from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
@@ -73,10 +73,9 @@ class IndexView(TemplateView):
             get_pattern_config_str(pattern_template_name)
         )
         template_context = get_pattern_context(pattern_template_name)
-        context["pattern_html_source"] = format_html("{}", mark_safe(render_to_string(
+        context["pattern_html_source"] = render_to_string(
             pattern_template_name, template_context
-        )))
-        print("pattern_html", context["pattern_html_source"])
+        )
         context["pattern_name"] = pattern_config.get("name", pattern_template_name)
         context["pattern_markdown"] = get_pattern_markdown(pattern_template_name)
 
