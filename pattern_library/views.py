@@ -1,7 +1,7 @@
 import json
 
 from django.http import Http404, HttpResponse
-from django.template.loader import render_to_string, get_template
+from django.template.loader import get_template, render_to_string
 from django.utils.decorators import method_decorator
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
