@@ -73,8 +73,8 @@ class IndexView(TemplateView):
             get_pattern_config_str(pattern_template_name)
         )
         template_context = get_pattern_context(pattern_template_name)
-        context["pattern_html_source"] = render_to_string(
-            pattern_template_name, template_context
+        context["pattern_html_source"] = escape(
+            render_to_string(pattern_template_name, template_context)
         )
         context["pattern_name"] = pattern_config.get("name", pattern_template_name)
         context["pattern_markdown"] = get_pattern_markdown(pattern_template_name)
