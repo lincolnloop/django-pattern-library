@@ -47,6 +47,7 @@ python = "^3.8"
 Django = ">=3.2,<5.1"
 PyYAML = ">=5.1,<7.0"
 Markdown = "^3.5.1"
+bs4 = "^0.0.2"
 
 [tool.poetry.dev-dependencies]
 beautifulsoup4 = "^4.8"

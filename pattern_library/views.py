@@ -1,5 +1,7 @@
 import json
 
+from bs4 import BeautifulSoup
+from bs4.formatter import HTMLFormatter
 from django.http import Http404, HttpResponse
 from django.template.loader import get_template, render_to_string
 from django.utils.decorators import method_decorator
@@ -74,8 +76,10 @@ class IndexView(TemplateView):
         )
         template_context = get_pattern_context(pattern_template_name)
         try:
+            soup = BeautifulSoup(render_to_string(pattern_template_name, template_context), 'html.parser')
+            formatter = HTMLFormatter(indent=4)
             context["pattern_html_source"] = escape(
-                render_to_string(pattern_template_name, template_context)
+                soup.prettify(formatter=formatter)
             )
         except Exception as e:
             context["pattern_html_source"] = f"Error rendering pattern: {e}"
