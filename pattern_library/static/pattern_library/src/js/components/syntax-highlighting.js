@@ -1,8 +1,8 @@
 import hljs from "highlight.js/lib/core";
 import django from "highlight.js/lib/languages/django";
 import yaml from "highlight.js/lib/languages/yaml";
-import html from "highlight.js/lib/languages/vbscript-html.js";
-import md from "highlight.js/lib/languages/markdown.js";
+import html from "highlight.js/lib/languages/vbscript-html";
+import md from "highlight.js/lib/languages/markdown";
 
 export default function () {
     hljs.registerLanguage("django", django);
