@@ -142,6 +142,30 @@ class ViewsTestCase(SimpleTestCase):
             "base content - extended content",
         )
 
+    def test_columns_on_index_page(self):
+        response = self.client.get(
+            reverse(("pattern_library:index")),
+        )
+        columns = [
+            "Template source",
+            "Template output",
+            "Template config",
+            "Template docs",
+        ]
+        for column in columns:
+            self.assertContains(response, column)
+
+    def test_template_output_on_index_page(self):
+        response = self.client.get(
+            reverse(
+                ("pattern_library:index"),
+            ),
+        )
+        self.assertContains(
+            response,
+            """<pre><code class="code html">&lt;svg class=&quot;icon icon--close&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;\n    &lt;use xlink:href=&quot;#close&quot;&gt;&lt;/use&gt;\n&lt;/svg&gt;\n</code></pre>""",
+        )
+
 
 class APIViewsTestCase(SimpleTestCase):
     def test_renders_with_tag_overrides(self):
