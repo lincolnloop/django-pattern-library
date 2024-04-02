@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1dev1](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.2.1dev1) - 2024-04-02
+
+### Added
+
+- Add HTML rendered code view in `Template output` column ([#2](https://github.com/lincolnloop/django-pattern-library/pull/2))
+
 ## [1.2.0](https://github.com/torchbox/django-pattern-library/releases/tag/v1.2.0) - 2024-01-16
 
 ### Added
