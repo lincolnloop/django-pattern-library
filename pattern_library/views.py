@@ -78,7 +78,10 @@ class IndexView(TemplateView):
         template_context = get_pattern_context(pattern_template_name)
         try:
             soup = BeautifulSoup(
-                render_to_string(pattern_template_name, template_context), "html.parser"
+                render_to_string(
+                    pattern_template_name, template_context, request=request
+                ),
+                "html.parser",
             )
             formatter = HTMLFormatter(indent=4)
             context["pattern_html_source"] = escape(soup.prettify(formatter=formatter))
