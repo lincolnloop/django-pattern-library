@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1dev2](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.2.1dev2) - 2024-04-02
+
+### Fixed
+
+- Pass request object to HTML rendered code view ([#3](https://github.com/lincolnloop/django-pattern-library/pull/3))
+
 ## [1.2.1dev1](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.2.1dev1) - 2024-04-02
 
 ### Added
