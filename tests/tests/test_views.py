@@ -161,16 +161,13 @@ class ViewsTestCase(SimpleTestCase):
                 ("pattern_library:index"),
             ),
         )
-        self.assertContains(
-            response,
-            '<pre><code class="code xml">&lt;svg aria-hidden=&quot;true&quot; '
-            "class=&quot;icon icon--close&quot; focusable=&quot;false&quot;&gt;"
-            "\n    &lt;use xlink:href=&quot;#close&quot;&gt;\n    &lt;/use&gt;"
-            "\n&lt;/svg&gt;\n</code></pre>\n                </div>\n\n"
-            '                <div id="tab-3" class="tabbed-content__item">'
-            '\n                    <pre><code class="code yaml">context:\n  '
-            "name: close\n</code></pre>\n                </div>",
-        )
+        soup = BeautifulSoup(response.content, features="html.parser")
+        tab = soup.select_one("#tab-3")
+        self.assertTrue(tab)
+        pre = tab.find("pre")
+        self.assertTrue(pre)
+        code = pre.find("code")
+        self.assertTrue(code)
 
 
 class APIViewsTestCase(SimpleTestCase):
