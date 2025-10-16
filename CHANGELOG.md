@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add HTML rendered code view in `Template output` column
+
 ## [1.5.0](https://github.com/torchbox/django-pattern-library/releases/tag/v1.5.0) - 2025-04-08
 
 ### Added
