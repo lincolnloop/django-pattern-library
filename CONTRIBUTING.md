@@ -28,15 +28,15 @@ Once the container is built, open a terminal with VS Code and run `django-admin 
 
 ### `docker-compose`
 
-First [install Docker and docker-compose](https://docs.docker.com/compose/install/), and make sure Docker is started. Then:
+First [install Docker and docker compose](https://docs.docker.com/compose/install/), and make sure Docker is started. Then:
 
 ```sh
 # Install the front-end tooling in the docker container:
-docker-compose run frontend npm ci
+docker compose run frontend npm ci
 # Bring up the web container and run the front-end tooling in watch mode:
-docker-compose up
+docker compose up
 # Run the development server:
-docker-compose exec web django-admin runserver 0.0.0.0:8000
+docker compose exec web django-admin runserver 0.0.0.0:8000
 ```
 
 Once the server is started, the pattern library will be available at `http://localhost:8000/`.

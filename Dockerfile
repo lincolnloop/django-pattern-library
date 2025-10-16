@@ -19,4 +19,6 @@ RUN pip install --user "poetry>=2.1.2,<3" && \
 COPY pyproject.toml ./
 RUN poetry install --no-root
 
+COPY tests/ ./tests/
+
 CMD django-admin runserver 0.0.0.0:8000
