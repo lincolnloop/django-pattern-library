@@ -142,6 +142,33 @@ class ViewsTestCase(SimpleTestCase):
             "base content - extended content",
         )
 
+    def test_columns_on_index_page(self):
+        response = self.client.get(
+            reverse(("pattern_library:index")),
+        )
+        columns = [
+            "Template source",
+            "Template output",
+            "Template config",
+            "Template docs",
+        ]
+        for column in columns:
+            self.assertContains(response, column)
+
+    def test_template_output_on_index_page(self):
+        response = self.client.get(
+            reverse(
+                ("pattern_library:index"),
+            ),
+        )
+        soup = BeautifulSoup(response.content, features="html.parser")
+        tab = soup.select_one("#tab-3")
+        self.assertTrue(tab)
+        pre = tab.find("pre")
+        self.assertTrue(pre)
+        code = pre.find("code")
+        self.assertTrue(code)
+
 
 class APIViewsTestCase(SimpleTestCase):
     def test_renders_with_tag_overrides(self):

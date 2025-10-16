@@ -126,7 +126,7 @@ jinja_visit_Extends = None
 
 def override_jinja_tags():
     """
-    Experimental. Overrides jinja extends and include tags for use in your pattern library.
+    Overrides jinja extends and include tags for use in your pattern library.
     Call it in your settings to override tags
     """
     global jinja_visit_Extends

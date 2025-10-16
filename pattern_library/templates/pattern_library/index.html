@@ -27,13 +27,19 @@
                 <li class="tabbed-content__heading tabbed-content__heading--active">
                     <a href="#tab-1">Template source</a>
                 </li>
+
                 <li class="tabbed-content__heading">
                     <a href="#tab-2">Template config</a>
                 </li>
 
                 <li class="tabbed-content__heading">
-                    <a href="#tab-3">Template docs</a>
+                    <a href="#tab-3">Template output</a>
                 </li>
+
+                <li class="tabbed-content__heading">
+                    <a href="#tab-4">Template docs</a>
+                </li>
+
             </ul>
 
             <div class="tabbed-content__tabs">
@@ -46,6 +52,10 @@
                 </div>
 
                 <div id="tab-3" class="tabbed-content__item">
+                    <pre><code class="code xml">{{ pattern_html_source }}</code></pre>
+                </div>
+
+                <div id="tab-4" class="tabbed-content__item">
                     <div class="md">{{ pattern_markdown|safe }}</div>
                 </div>
             </div>
