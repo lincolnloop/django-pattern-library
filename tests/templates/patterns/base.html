@@ -3,7 +3,7 @@
 <html lang="en-GB">
     <head>
         <meta charset="utf-8" />
-        <title>{% block title %}Fragment{% endblock %}</title>
+	<title>{% block title %}{% if pattern_name %}{{ pattern_name }} | {% endif %}Django pattern library{% endblock %}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         <link rel="stylesheet" href="{% static 'main.css' %}">

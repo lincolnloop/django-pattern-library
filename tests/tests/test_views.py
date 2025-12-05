@@ -113,11 +113,21 @@ class ViewsTestCase(SimpleTestCase):
         self.assertContains(response, "<title>Page</title>")
 
     def test_fragments(self):
-        for template_name in [
-            "patterns/atoms/test_atom/test_atom.html",
-            "patterns/molecules/test_molecule/test_molecule.html",
-            "patterns/molecules/test-molecule/test-molecule.html",
-        ]:
+        test_cases = [
+            (
+                "patterns/atoms/test_atom/test_atom.html",
+                "<title>Django pattern library</title>",
+            ),
+            (
+                "patterns/molecules/test_molecule/test_molecule.html",
+                "<title>Pretty name for test molecule | Django pattern library</title>",
+            ),
+            (
+                "patterns/molecules/test-molecule/test-molecule.html",
+                "<title>Django pattern library</title>",
+            ),
+        ]
+        for template_name, expected_title in test_cases:
             with self.subTest(template_name=template_name):
                 self.assertContains(
                     self.client.get(
@@ -126,7 +136,7 @@ class ViewsTestCase(SimpleTestCase):
                             kwargs={"pattern_template_name": template_name},
                         ),
                     ),
-                    "<title>Fragment</title>",
+                    expected_title,
                 )
 
     def test_fragment_extended_from_variable(self):
@@ -141,6 +151,35 @@ class ViewsTestCase(SimpleTestCase):
             ),
             "base content - extended content",
         )
+
+    def test_pattern_name_in_context(self):
+        """Test that pattern_name and pattern_config are added to context for fragments"""
+        # Test pattern with custom name from YAML
+        response = self.client.get(
+            reverse(
+                "pattern_library:render_pattern",
+                kwargs={
+                    "pattern_template_name": "patterns/molecules/test_molecule/test_molecule.html"
+                },
+            )
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(
+            response,
+            "<title>Pretty name for test molecule | Django pattern library</title>",
+        )
+
+        # Test pattern without custom name (should have empty pattern_name)
+        response = self.client.get(
+            reverse(
+                "pattern_library:render_pattern",
+                kwargs={
+                    "pattern_template_name": "patterns/atoms/test_atom/test_atom.html"
+                },
+            )
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "<title>Django pattern library</title>")
 
 
 class APIViewsTestCase(SimpleTestCase):

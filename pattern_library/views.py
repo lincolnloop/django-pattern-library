@@ -101,6 +101,13 @@ class RenderPatternView(TemplateView):
         if pattern_is_fragment:
             context = self.get_context_data()
             context["pattern_library_rendered_pattern"] = mark_safe(rendered_pattern)
+
+            # Add the pattern config to the context, so that name is available
+            # in the base template.
+            pattern_config = get_pattern_config(pattern_template_name)
+            context["pattern_config"] = pattern_config
+            context["pattern_name"] = pattern_config.get("name", "")
+
             return self.render_to_response(context)
 
         return HttpResponse(rendered_pattern)
