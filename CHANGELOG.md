@@ -1,11 +1,16 @@
 # Changelog
 
-## [Unreleased]
+## [1.5.3](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.5.3)
 
 ### Fixed
 
 - Avoid duplicating templates when more than one template engine is set up
 
+## [1.5.2](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.5.2)
+
+### Added
+
+- Add Pattern Config To The Base Template Context by @dchukhin in #8
 
 ## [1.5.0](https://github.com/torchbox/django-pattern-library/releases/tag/v1.5.0) - 2025-04-08
 
