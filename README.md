@@ -67,4 +67,4 @@ Project logo from [FxEmoji](https://github.com/mozilla/fxemoji). Documentation w
 
 ## GitHub releases
 
-Note: if making a release on GitHub, please make sure to 1. build locally (`poetry build`) , and 2. include the 2 build files (*.tar.gz and *.whl) as a part of the GitHub release.
+Note: if making a release on GitHub, please make sure to 1. build locally (`poetry build`) , and 2. include the 2 build files (`*.tar.gz` and `*.whl`) as a part of the GitHub release.
