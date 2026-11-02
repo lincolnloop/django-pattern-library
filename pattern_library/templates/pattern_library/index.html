@@ -24,6 +24,7 @@
         {% endblock %}
 
         <iframe class="iframe js-iframe is-animatable" name="pattern-iframe" src="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" title="Iframe pattern"></iframe>
+        <div class="resizer resizer--preview js-resize-preview" role="separator" aria-orientation="horizontal" aria-label="Resize pattern preview" tabindex="0"></div>
 
         <div class="tabbed-content">
             <ul class="tabbed-content__list">

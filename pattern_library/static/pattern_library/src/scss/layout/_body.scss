@@ -2,7 +2,7 @@
 
 .body {
     display: grid;
-    grid-template-columns: $sidebar-width 1fr;
+    grid-template-columns: var(--sidebar-width, #{$sidebar-width}) 1fr;
 
     &.nav-closed {
         grid-template-columns: 0 1fr;
@@ -10,5 +10,10 @@
 
     @media only screen and (min-width: 600px) {
         transition: grid-template-columns 0.25s ease; // works in firefox
+    }
+
+    &.is-resizing {
+        transition: none;
+        user-select: none;
     }
 }

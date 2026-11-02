@@ -8,6 +8,7 @@
 - `SITE_TITLE` setting to customise the pattern library title shown in the header.
 - Expose the pattern config and name in the template context as `pattern_config` and `pattern_name`, so they can be used in base templates.
 - Live-edit a pattern's YAML config in the "Template config" tab and see the pattern re-render in the preview.
+- Resize the sidebar and the pattern preview by dragging their edges (or with the arrow keys). Sizes are remembered across pages.
 
 ## [1.6.0](https://github.com/torchbox/django-pattern-library/releases/tag/v1.6.0) - 2026-07-24
 
