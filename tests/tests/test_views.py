@@ -1,4 +1,4 @@
-from django.test import SimpleTestCase
+from django.test import Client, SimpleTestCase
 
 from bs4 import BeautifulSoup
 
@@ -180,6 +180,74 @@ class ViewsTestCase(SimpleTestCase):
         )
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "<title>Django pattern library</title>")
+
+    def test_pattern_config_in_context_is_not_mutated_by_rendering(self):
+        response = self.client.get(
+            reverse(
+                "pattern_library:render_pattern",
+                kwargs={
+                    "pattern_template_name": "patterns/molecules/button/button.html"
+                },
+            )
+        )
+        self.assertEqual(
+            response.context["pattern_config"]["context"],
+            {"target_page": {"title": "Get started"}},
+        )
+
+    def test_index_has_config_editor(self):
+        response = self.client.get(
+            reverse(
+                "pattern_library:display_pattern",
+                kwargs={
+                    "pattern_template_name": "patterns/molecules/button/button.html"
+                },
+            )
+        )
+        self.assertContains(response, "Toggle live mode")
+        self.assertContains(response, 'target="pattern-iframe"')
+        self.assertContains(response, "csrfmiddlewaretoken")
+        self.assertContains(response, "title: Get started")
+
+
+class LiveConfigViewsTestCase(SimpleTestCase):
+    def setUp(self):
+        self.url = reverse(
+            "pattern_library:render_pattern",
+            kwargs={"pattern_template_name": "patterns/molecules/button/button.html"},
+        )
+
+    def test_renders_posted_config(self):
+        response = self.client.post(
+            self.url,
+            {
+                "config": "name: Edited\n"
+                "context:\n  target_page:\n    title: Edited title\n"
+                "tags:\n  pageurl:\n    target_page:\n      raw: /edited\n"
+            },
+        )
+        self.assertContains(response, "Edited title")
+        self.assertContains(response, "/edited")
+        self.assertContains(response, "<title>Edited | Django pattern library</title>")
+        self.assertEqual(response["X-Frame-Options"], "SAMEORIGIN")
+
+    def test_invalid_yaml(self):
+        for config in ("context: [unclosed", "just a string"):
+            with self.subTest(config=config):
+                response = self.client.post(self.url, {"config": config})
+                self.assertEqual(response.status_code, 400)
+                self.assertContains(response, "Invalid YAML", status_code=400)
+
+    def test_requires_csrf_token(self):
+        client = Client(enforce_csrf_checks=True)
+        response = client.post(self.url, {"config": "context: {}"})
+        self.assertEqual(response.status_code, 403)
+
+    def test_options_marks_live_edit_backend(self):
+        response = self.client.options(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("POST", response["Allow"])
+        self.assertEqual(response["X-Pattern-Library-Live-Edit"], "1")
 
 
 class APIViewsTestCase(SimpleTestCase):

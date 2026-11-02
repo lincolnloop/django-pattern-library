@@ -23,7 +23,7 @@
         {% block custom_pattern_header %}
         {% endblock %}
 
-        <iframe class="iframe js-iframe is-animatable" src="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" title="Iframe pattern"></iframe>
+        <iframe class="iframe js-iframe is-animatable" name="pattern-iframe" src="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" title="Iframe pattern"></iframe>
 
         <div class="tabbed-content">
             <ul class="tabbed-content__list">
@@ -49,7 +49,16 @@
                 </div>
 
                 <div id="tab-2" class="tabbed-content__item">
-                    <pre><code class="code yaml">{{ pattern_config }}</code></pre>
+                    <pre class="js-config-source"><code class="code yaml">{{ pattern_config }}</code></pre>
+                    <form class="js-config-form" id="pattern-config-form" method="post" target="pattern-iframe" action="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" hidden>
+                        {% csrf_token %}
+                        <textarea class="code code--editor js-config-editor" name="config" spellcheck="false" rows="20" aria-label="Template config (YAML)">{{ pattern_config }}</textarea>
+                    </form>
+                    <button class="button button--config js-config-live-mode" type="button" aria-pressed="false" hidden>Toggle live mode</button>
+                    <span class="js-config-actions" hidden>
+                        <button class="button button--config" type="submit" form="pattern-config-form">Render</button>
+                        <button class="button button--config" type="reset" form="pattern-config-form">Reset</button>
+                    </span>
                 </div>
 
                 <div id="tab-3" class="tabbed-content__item">
