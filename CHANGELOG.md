@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Added
+
+- `CUSTOM_CSS` setting plus a `{% pattern_library_custom_css %}` tag, allowing per-project theming by pointing at a CSS file of custom properties (styles are driven by runtime CSS custom properties).
+- `SITE_TITLE` setting to customise the pattern library title shown in the header.
+- Expose the pattern config and name in the template context as `pattern_config` and `pattern_name`, so they can be used in base templates.
+
 ## [1.6.0](https://github.com/torchbox/django-pattern-library/releases/tag/v1.6.0) - 2026-07-24
 
 ### Added
