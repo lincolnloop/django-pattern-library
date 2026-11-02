@@ -1,9 +1,13 @@
 from unittest.mock import patch
 
 from django.shortcuts import render
-from django.test import RequestFactory, SimpleTestCase
+from django.test import RequestFactory, SimpleTestCase, override_settings
 
 from pattern_library import get_pattern_context_var_name
+from pattern_library.templatetags.pattern_library_tags import (
+    pattern_library_custom_css,
+    pattern_library_site_title,
+)
 
 from .utils import reverse
 
@@ -48,6 +52,26 @@ class TagsTestCase(SimpleTestCase):
         self.assertContains(response, "POTATO1")
         self.assertContains(response, "POTANoneTO2")
         self.assertContains(response, "POTA0TO3")
+
+
+class CustomCssTagTestCase(SimpleTestCase):
+    def test_no_custom_css_returns_empty(self):
+        self.assertEqual(pattern_library_custom_css(), "")
+
+    @override_settings(PATTERN_LIBRARY={"CUSTOM_CSS": "css/custom.css"})
+    def test_custom_css_emits_stylesheet_link(self):
+        result = pattern_library_custom_css()
+        self.assertIn('<link rel="stylesheet"', result)
+        self.assertIn("/static/css/custom.css", result)
+
+
+class SiteTitleTagTestCase(SimpleTestCase):
+    def test_default_site_title(self):
+        self.assertEqual(pattern_library_site_title(), "Django Pattern Library")
+
+    @override_settings(PATTERN_LIBRARY={"SITE_TITLE": "My Patterns"})
+    def test_custom_site_title(self):
+        self.assertEqual(pattern_library_site_title(), "My Patterns")
 
 
 class TagsTestFailCase(SimpleTestCase):
