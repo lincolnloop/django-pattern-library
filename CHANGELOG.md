@@ -2,10 +2,26 @@
 
 ## [Unreleased]
 
+## [1.6.0](https://github.com/torchbox/django-pattern-library/releases/tag/v1.6.0) - 2026-07-24
+
+### Added
+
+- Support Django 6.1
+
 ### Fixed
 
-- Avoid duplicating templates when more than one template engine is set up
+- Avoid duplicating templates when more than one template engine is set up ([#264](https://github.com/torchbox/django-pattern-library/issues/264))
 
+### Changed
+
+- Add blocks to base.html and index.html to make them easier to extend ([#276](https://github.com/torchbox/django-pattern-library/issues/276))
+- Swap position of template "docs" and "source" tabs, and make the "docs" tab the default ([#259](https://github.com/torchbox/django-pattern-library/issues/259))
+- Display a default text when no docs is available
+- Relax supported version ranges for PyYAML and Markdown
+
+### Removed
+
+- Drop support for Python 3.9
 
 ## [1.5.0](https://github.com/torchbox/django-pattern-library/releases/tag/v1.5.0) - 2025-04-08
 

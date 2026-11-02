@@ -1,12 +1,10 @@
-@use "../config" as *;
+@use '../config' as *;
 
 .sidebar {
     background-color: $off-white;
     height: 100vh;
     margin-left: 0;
     overflow: auto;
-    -ms-grid-column: 1;
-    -ms-grid-row: 2;
 
     &__inner {
         padding: 20px;
