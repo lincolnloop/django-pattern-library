@@ -1,6 +1,6 @@
 site_name: django-pattern-library
 repo_url: https://github.com/torchbox/django-pattern-library
-site_url:
+site_url: https://torchbox.github.io/django-pattern-library/
 edit_uri: edit/main/docs/
 
 repo_name: django-pattern-library
@@ -12,6 +12,7 @@ theme:
     primary: indigo
   logo: images/logo.svg
   favicon: images/favicon.png
+  custom_dir: docs/overrides
 markdown_extensions:
   - codehilite
   - admonition
@@ -30,6 +31,21 @@ plugins:
   - redirects:
       redirect_maps:
         'reference/related-projects.md': 'community/related-projects.md'
+  - llmstxt-md:
+      enable_markdown_urls: true
+      enable_llms_txt: true
+      enable_llms_full: true
+      enable_copy_button: false
+      sections:
+        'Getting started':
+          - index.md
+          - getting-started.md
+        'Guides':
+          - guides/*.md
+        'Recipes':
+          - recipes/*.md
+        'Reference':
+          - reference/*.md
 nav:
   - 'Home': 'index.md'
   - 'Getting started': 'getting-started.md'
@@ -38,26 +54,26 @@ nav:
   - 'Overriding tags': 'guides/overriding-template-tags.md'
   - 'Usage tips': 'guides/usage-tips.md'
   - 'Guides':
-    - 'Customizing rendering': 'guides/customizing-template-rendering.md'
-    - 'Multiple variants': 'guides/multiple-variants.md'
-    - 'Automated tests': 'guides/automated-tests.md'
-    - 'Static site export': 'guides/static-site-export.md'
-    - 'Reuse across projects': 'guides/reuse-across-projects.md'
+      - 'Customizing rendering': 'guides/customizing-template-rendering.md'
+      - 'Multiple variants': 'guides/multiple-variants.md'
+      - 'Automated tests': 'guides/automated-tests.md'
+      - 'Static site export': 'guides/static-site-export.md'
+      - 'Reuse across projects': 'guides/reuse-across-projects.md'
   - 'Recipes':
-    - 'Forms and fields': 'recipes/forms-and-fields.md'
-    - 'Image include': 'recipes/image-include.md'
-    - 'Image lazyload': 'recipes/image-lazyload.md'
-    - 'Inclusion tags': 'recipes/inclusion-tags.md'
-    - 'Looping for tags': 'recipes/looping-for-tags.md'
-    - 'Pagination': 'recipes/pagination.md'
-    - 'API rendering': 'recipes/api-rendering.md'
+      - 'Forms and fields': 'recipes/forms-and-fields.md'
+      - 'Image include': 'recipes/image-include.md'
+      - 'Image lazyload': 'recipes/image-lazyload.md'
+      - 'Inclusion tags': 'recipes/inclusion-tags.md'
+      - 'Looping for tags': 'recipes/looping-for-tags.md'
+      - 'Pagination': 'recipes/pagination.md'
+      - 'API rendering': 'recipes/api-rendering.md'
   - 'Reference':
-    - 'API and settings': 'reference/api.md'
-    - 'Concepts': 'reference/concepts.md'
-    - 'Known issues': 'reference/known-issues.md'
+      - 'API and settings': 'reference/api.md'
+      - 'Concepts': 'reference/concepts.md'
+      - 'Known issues': 'reference/known-issues.md'
   - 'Community':
-    - 'Support': 'community/support.md'
-    - 'Related projects': 'community/related-projects.md'
-    - 'Code of conduct': 'community/code-of-conduct.md'
-    - 'Security policy': 'community/security-policy.md'
+      - 'Support': 'community/support.md'
+      - 'Related projects': 'community/related-projects.md'
+      - 'Code of conduct': 'community/code-of-conduct.md'
+      - 'Security policy': 'community/security-policy.md'
   - 'Online demo': '/django-pattern-library/demo/'

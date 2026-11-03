@@ -1,5 +1,5 @@
-@use "sass:color";
-@use "../config" as *;
+@use 'sass:color';
+@use '../config' as *;
 
 .tabbed-content {
     &__list {
@@ -15,23 +15,25 @@
         text-align: center;
 
         > a {
-            color: color.adjust(#000, $lightness: 30%);
+            color: color.adjust($black, $lightness: 30%);
             padding: 12px 0;
             display: block;
             width: 100%;
             background-color: color.adjust($color-primary, $lightness: 30%);
             text-decoration: none;
-            transition: color 0.25s ease, background-color 0.25s ease;
+            transition:
+                color 0.25s ease,
+                background-color 0.25s ease;
 
             &:hover {
-                color: #000;
+                color: $black;
                 background-color: var(--color-primary);
             }
         }
 
         &--active {
             > a {
-                color: #000;
+                color: $black;
                 background-color: var(--color-primary);
             }
         }

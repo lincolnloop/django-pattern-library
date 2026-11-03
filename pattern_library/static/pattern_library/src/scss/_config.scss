@@ -2,12 +2,15 @@
 
 // Default SCSS variables for compile-time usage (needed for Sass functions)
 $color-primary: #34b2b2 !default;
-$family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif !default;
+$family-primary:
+    -apple-system, blinkmacsystemfont, 'Segoe UI', roboto, oxygen-sans, ubuntu,
+    cantarell, 'Helvetica Neue', sans-serif !default;
 
 // CSS Custom Properties for runtime customization
-html, :root {
-  --color-primary: #{$color-primary};
-  --family-primary: #{$family-primary};
+html,
+:root {
+    --color-primary: #{$color-primary};
+    --family-primary: #{$family-primary};
 }
 
 // $color--primary + $family--primary are in _config.scss
@@ -17,5 +20,5 @@ $light-grey: #c4c4c4;
 $mid-grey: #606060;
 $off-black: #333;
 $black: #000;
-$link-color:#0001ee;
+$link-color: #0001ee;
 $sidebar-width: 230px;

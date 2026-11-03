@@ -17,8 +17,8 @@ poetry add --dev django-pattern-library
 
 We support:
 
-- Django 4.2, 5.0, 5.1
-- Python 3.9, 3.10, 3.11, 3.12
+- Django 4.2, 5.2, 6.0, 6.1
+- Python 3.10, 3.11, 3.12, 3.13, 3.14
 - Django Templates and Jinja (experimental)
 - Modern “evergreen” desktop and mobile browsers
 
@@ -198,3 +198,51 @@ context:
 And that’s it! Our `quote_block` should finally appear in the pattern library, along with its rendering with this mock data.
 
 ![Screenshot of the quote_block template](images/getting-started/getting-started-complete.png)
+
+## Customisation
+
+If you need to make any customisations to the pattern library markup, some custom blocks are provided to make this easier and avoid you having to copy the entire template file into your project.
+
+### In base.html:
+
+Allow custom JavaScript or JavaScript files:
+
+```html
+{% block custom_extra_js %} {% endblock %}
+```
+
+Allow custom CSS or CSS files:
+
+```html
+{% block custom_extra_css %} {% endblock %}
+```
+
+Allow custom navigation items in the sidebar:
+
+```html
+{% block custom_nav_item %} {% endblock %}
+```
+
+Allow extra sidebar content after the navigation:
+
+```html
+{% block custom_sidebar_content %} {% endblock %}
+```
+
+### In index.html
+
+Allow extra markup in the pattern header area:
+
+```html
+{% block custom_pattern_header %} {% endblock %}
+```
+
+Allow extra tab items:
+
+```html
+{% block custom_tab_heading %} {% endblock %}
+```
+
+```html
+{% block custom_tab_content %} {% endblock %}
+```
