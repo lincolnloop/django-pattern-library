@@ -1,4 +1,5 @@
 const root = document.documentElement;
+const handles = {};
 const limits = {
     '--sidebar-width': () => [150, window.innerWidth / 2],
     '--iframe-height': () => [100, Infinity],
@@ -9,6 +10,7 @@ function setSize(name, size) {
     const px = Math.round(Math.min(Math.max(size, min), max));
     root.style.setProperty(name, `${px}px`);
     localStorage.setItem(`pattern-library${name}`, px);
+    handles[name]?.setAttribute('aria-valuenow', px);
 }
 
 // Runs before the body is parsed, so pages load at the saved sizes
@@ -22,9 +24,11 @@ export function restoreSizes() {
 }
 
 function resizable(handle, name, axis, measure) {
+    handles[name] = handle;
     // The sidebar width animates, so prefer the last size set over measuring
     const getSize = () =>
         parseFloat(root.style.getPropertyValue(name)) || measure();
+    handle.setAttribute('aria-valuenow', Math.round(getSize()));
 
     handle.addEventListener('pointerdown', (e) => {
         const offset = e[axis] - getSize();

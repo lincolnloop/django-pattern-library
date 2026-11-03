@@ -23,8 +23,8 @@
         {% block custom_pattern_header %}
         {% endblock %}
 
-        <iframe class="iframe js-iframe is-animatable" name="pattern-iframe" src="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" title="Iframe pattern"></iframe>
-        <div class="resizer resizer--preview js-resize-preview" role="separator" aria-orientation="horizontal" aria-label="Resize pattern preview" tabindex="0"></div>
+        <iframe class="iframe js-iframe is-animatable" src="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" title="Iframe pattern"></iframe>
+        <div class="resizer resizer--preview js-resize-preview" role="separator" aria-orientation="horizontal" aria-label="Resize pattern preview" aria-valuenow="0" tabindex="0"></div>
 
         <div class="tabbed-content">
             <ul class="tabbed-content__list">
@@ -51,7 +51,7 @@
 
                 <div id="tab-2" class="tabbed-content__item">
                     <pre class="js-config-source"><code class="code yaml">{{ pattern_config }}</code></pre>
-                    <form class="js-config-form" id="pattern-config-form" method="post" target="pattern-iframe" action="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" hidden>
+                    <form class="js-config-form" id="pattern-config-form" method="post" action="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" hidden>
                         {% csrf_token %}
                         <textarea class="code code--editor js-config-editor" name="config" spellcheck="false" rows="20" aria-label="Template config (YAML)">{{ pattern_config }}</textarea>
                     </form>

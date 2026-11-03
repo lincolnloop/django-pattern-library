@@ -28,6 +28,21 @@ export default function () {
         }
     });
 
+    // Write the render into the iframe in place rather than navigating it, so
+    // live edits don't pile up as back-button history entries
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        fetch(form.action, { method: 'POST', body: new FormData(form) })
+            .then((response) => response.text())
+            .then((html) => {
+                const doc = iframe.contentDocument;
+                doc.open();
+                doc.write(html);
+                doc.close();
+            })
+            .catch(() => {});
+    });
+
     editor.addEventListener('input', () => {
         clearTimeout(timeout);
         timeout = setTimeout(() => form.requestSubmit(), 500);

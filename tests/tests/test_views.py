@@ -205,7 +205,7 @@ class ViewsTestCase(SimpleTestCase):
             )
         )
         self.assertContains(response, "Toggle live mode")
-        self.assertContains(response, 'target="pattern-iframe"')
+        self.assertContains(response, "js-config-editor")
         self.assertContains(response, "csrfmiddlewaretoken")
         self.assertContains(response, "title: Get started")
 
@@ -237,6 +237,19 @@ class LiveConfigViewsTestCase(SimpleTestCase):
                 response = self.client.post(self.url, {"config": config})
                 self.assertEqual(response.status_code, 400)
                 self.assertContains(response, "Invalid YAML", status_code=400)
+
+    def test_scalar_context_is_rejected(self):
+        # A scalar context/tags used to 500 when rendering tried to index it
+        for config in ("context: t", "tags: t"):
+            with self.subTest(config=config):
+                response = self.client.post(self.url, {"config": config})
+                self.assertEqual(response.status_code, 400)
+                self.assertContains(response, "must be a mapping", status_code=400)
+
+    def test_empty_config_renders_empty_not_default(self):
+        response = self.client.post(self.url, {"config": ""})
+        self.assertEqual(response.status_code, 200)
+        self.assertNotContains(response, "Get started")
 
     def test_requires_csrf_token(self):
         client = Client(enforce_csrf_checks=True)

@@ -93,14 +93,20 @@ class RenderPatternView(TemplateView):
     def post(self, request, pattern_template_name=None):
         try:
             config = yaml.safe_load(request.POST.get("config", "")) or {}
-        except yaml.YAMLError as e:
+        except yaml.YAMLError:
+            # Don't echo the exception back; it exposes internals (CodeQL)
             return HttpResponseBadRequest(
-                f"Invalid YAML: {e}", content_type="text/plain"
+                "Invalid YAML: syntax error", content_type="text/plain"
             )
         if not isinstance(config, dict):
             return HttpResponseBadRequest(
                 "Invalid YAML: config must be a mapping", content_type="text/plain"
             )
+        for key in ("context", "tags"):
+            if key in config and not isinstance(config[key], dict):
+                return HttpResponseBadRequest(
+                    f"Invalid YAML: {key} must be a mapping", content_type="text/plain"
+                )
         return self.render_with_config(request, pattern_template_name, config)
 
     def options(self, request, *args, **kwargs):
