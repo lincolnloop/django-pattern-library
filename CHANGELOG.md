@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.6.0+ll.1](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.6.0+ll.1) - 2026-11-04
+
 ### Added
 
 - `CUSTOM_CSS` setting plus a `{% pattern_library_custom_css %}` tag, allowing per-project theming by pointing at a CSS file of custom properties (styles are driven by runtime CSS custom properties).
