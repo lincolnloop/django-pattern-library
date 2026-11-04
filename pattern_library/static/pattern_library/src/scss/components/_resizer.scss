@@ -1,0 +1,57 @@
+@use '../config' as *;
+
+.resizer {
+    position: relative;
+    touch-action: none;
+
+    &::after {
+        content: '';
+        position: absolute;
+        background-color: var(--color-primary);
+        opacity: 0;
+        transition: opacity 0.15s ease;
+    }
+
+    &:hover::after,
+    &:focus-visible::after,
+    &.is-active::after {
+        opacity: 1;
+    }
+
+    &--sidebar {
+        display: none;
+        position: fixed;
+        top: 45px;
+        bottom: 0;
+        left: var(--sidebar-width, #{$sidebar-width});
+        width: 8px;
+        cursor: col-resize;
+
+        &::after {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 2px;
+        }
+
+        @media only screen and (min-width: 600px) {
+            display: block;
+        }
+
+        .nav-closed & {
+            display: none;
+        }
+    }
+
+    &--preview {
+        height: 20px;
+        cursor: row-resize;
+
+        &::after {
+            top: 9px;
+            right: 0;
+            left: 0;
+            height: 2px;
+        }
+    }
+}

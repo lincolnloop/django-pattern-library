@@ -4,13 +4,17 @@
     box-sizing: content-box;
     width: 100%;
     border: 1px solid $light-grey;
-    margin: 20px 0;
-    resize: both;
+    margin: 20px 0 0;
+    resize: horizontal;
     overflow: auto;
-    height: 415px;
+    height: var(--iframe-height, 415px);
 
     &.is-animatable {
         transition: width 0.25s ease;
+    }
+
+    .is-resizing & {
+        pointer-events: none;
     }
 
     .iframe-open & {

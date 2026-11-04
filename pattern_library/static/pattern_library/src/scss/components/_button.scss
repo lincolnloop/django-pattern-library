@@ -22,6 +22,20 @@
         }
     }
 
+    &--config {
+        margin: 0 8px 24px 0;
+        padding: 8px 16px;
+        border: 2px solid $light-grey;
+        color: $mid-grey;
+        font-weight: bold;
+        background-color: $off-white;
+        cursor: pointer;
+
+        &[aria-pressed='true'] {
+            border-color: $mid-grey;
+        }
+    }
+
     &--close-menu {
         display: flex;
         background-color: $off-black;

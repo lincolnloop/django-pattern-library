@@ -12,9 +12,14 @@ export function resizeIframe() {
         this.classList.add('is-animatable');
     });
 
-    patternIframe.contentWindow.addEventListener('resize', (e) => {
+    const showSize = (e) => {
         document.querySelector('.js-iframe-size').innerHTML =
             `${e.target.innerWidth} x ${e.target.innerHeight}`;
+    };
+    patternIframe.contentWindow.addEventListener('resize', showSize);
+    // Each iframe navigation gets a new window, dropping the listener
+    patternIframe.addEventListener('load', () => {
+        patternIframe.contentWindow.addEventListener('resize', showSize);
     });
 
     // Close iframe with escape key

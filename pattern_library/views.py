@@ -1,6 +1,7 @@
+import copy
 import json
 
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.template.loader import get_template
 from django.utils.decorators import method_decorator
 from django.utils.html import escape
@@ -9,12 +10,13 @@ from django.views.decorators.clickjacking import xframe_options_sameorigin
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 
+import yaml
+
 from pattern_library import get_base_template_names, get_pattern_base_template_name
 from pattern_library.exceptions import PatternLibraryEmpty, TemplateIsNotPattern
 from pattern_library.utils import (
     get_pattern_config,
     get_pattern_config_str,
-    get_pattern_context,
     get_pattern_markdown,
     get_renderer,
     get_sections,
@@ -78,23 +80,55 @@ class IndexView(TemplateView):
         return self.render_to_response(context)
 
 
+@method_decorator(xframe_options_sameorigin, name="dispatch")
 class RenderPatternView(TemplateView):
-    http_method_names = ("get",)
+    http_method_names = ("get", "post", "options")
     template_name = get_pattern_base_template_name()
 
-    @method_decorator(xframe_options_sameorigin)
     def get(self, request, pattern_template_name=None):
+        return self.render_with_config(
+            request, pattern_template_name, get_pattern_config(pattern_template_name)
+        )
+
+    def post(self, request, pattern_template_name=None):
+        try:
+            config = yaml.safe_load(request.POST.get("config", "")) or {}
+        except yaml.YAMLError:
+            # Don't echo the exception back; it exposes internals (CodeQL)
+            return HttpResponseBadRequest(
+                "Invalid YAML: syntax error", content_type="text/plain"
+            )
+        if not isinstance(config, dict):
+            return HttpResponseBadRequest(
+                "Invalid YAML: config must be a mapping", content_type="text/plain"
+            )
+        for key in ("context", "tags"):
+            if key in config and not isinstance(config[key], dict):
+                return HttpResponseBadRequest(
+                    f"Invalid YAML: {key} must be a mapping", content_type="text/plain"
+                )
+        return self.render_with_config(request, pattern_template_name, config)
+
+    def options(self, request, *args, **kwargs):
+        # Static hosts (e.g. Apache) can allow POST too; this marks a real backend
+        response = super().options(request, *args, **kwargs)
+        response["X-Pattern-Library-Live-Edit"] = "1"
+        return response
+
+    def render_with_config(self, request, pattern_template_name, config):
         renderer = get_renderer()
         pattern_template_ancestors = renderer.get_template_ancestors(
             pattern_template_name,
-            context=get_pattern_context(self.kwargs["pattern_template_name"]),
+            context=config.get("context", {}),
         )
         pattern_is_fragment = set(pattern_template_ancestors).isdisjoint(
             set(get_base_template_names())
         )
 
         try:
-            rendered_pattern = render_pattern(request, pattern_template_name)
+            rendered_pattern = render_pattern(
+                request, pattern_template_name, config=copy.deepcopy(config)
+            )
         except TemplateIsNotPattern:
             raise Http404
 
@@ -104,9 +138,8 @@ class RenderPatternView(TemplateView):
 
             # Add the pattern config to the context, so that name is available
             # in the base template.
-            pattern_config = get_pattern_config(pattern_template_name)
-            context["pattern_config"] = pattern_config
-            context["pattern_name"] = pattern_config.get("name", "")
+            context["pattern_config"] = config
+            context["pattern_name"] = config.get("name", "")
 
             return self.render_to_response(context)
 

@@ -147,7 +147,7 @@ def render_pattern(request, template_name, allow_non_patterns=False, config=None
     if not allow_non_patterns and not is_pattern(template_name):
         raise TemplateIsNotPattern
 
-    if not config:
+    if config is None:
         config = get_pattern_config(template_name)
 
     context = config.get("context", {})

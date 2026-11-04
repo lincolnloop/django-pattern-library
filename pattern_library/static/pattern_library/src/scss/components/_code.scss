@@ -5,4 +5,14 @@
     @media only screen and (min-width: 1200px) {
         width: 80vw;
     }
+
+    &--editor {
+        display: block;
+        margin-bottom: 16px;
+        padding: 10px;
+        overflow: auto;
+        font-family: monospace;
+        font-size: inherit;
+        resize: vertical;
+    }
 }
