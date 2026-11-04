@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.6.0+ll.2](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.6.0+ll.2) - 2026-11-04
+
+### Fixed
+
+- Remove the extra page scroll caused by the sidebar being forced to full viewport height.
+
 ## [1.6.0+ll.1](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.6.0+ll.1) - 2026-11-04
 
 ### Added
