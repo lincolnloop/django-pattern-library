@@ -3,6 +3,7 @@
 .body {
     display: grid;
     grid-template-columns: var(--sidebar-width, #{$sidebar-width}) 1fr;
+    grid-template-rows: auto 1fr;
 
     &.nav-closed {
         grid-template-columns: 0 1fr;
