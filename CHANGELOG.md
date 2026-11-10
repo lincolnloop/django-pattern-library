@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Live-edit renders run the pattern's scripts in a fresh page, so scripts with top-level `const`/`let`/`class` or custom element definitions no longer break on re-render.
+- Resetting the live config no longer adds a browser history entry.
+
 ## [1.6.0+ll.2](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.6.0+ll.2) - 2026-11-04
 
 ### Fixed

@@ -28,17 +28,28 @@ export default function () {
         }
     });
 
-    // Write the render into the iframe in place rather than navigating it, so
-    // live edits don't pile up as back-button history entries
+    // Fresh about:blank per render: document.open() keeps the old window, so
+    // page scripts would re-run in one scope. replace() skips history entries
+    let pendingHtml;
+    iframe.addEventListener('load', () => {
+        const html = pendingHtml;
+        pendingHtml = undefined;
+        if (html === undefined) {
+            return;
+        }
+        const doc = iframe.contentDocument;
+        doc.open();
+        doc.write(html);
+        doc.close();
+    });
+
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         fetch(form.action, { method: 'POST', body: new FormData(form) })
             .then((response) => response.text())
             .then((html) => {
-                const doc = iframe.contentDocument;
-                doc.open();
-                doc.write(html);
-                doc.close();
+                pendingHtml = html;
+                iframe.contentWindow.location.replace('about:blank');
             })
             .catch(() => {});
     });
@@ -50,6 +61,6 @@ export default function () {
 
     form.addEventListener('reset', () => {
         clearTimeout(timeout);
-        iframe.src = iframe.src;
+        iframe.contentWindow.location.replace(iframe.src);
     });
 }
