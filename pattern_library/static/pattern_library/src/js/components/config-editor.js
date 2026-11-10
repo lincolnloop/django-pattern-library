@@ -1,11 +1,27 @@
+import { CodeJar } from 'codejar';
+import hljs from 'highlight.js/lib/core';
+
 export default function () {
     const liveMode = document.querySelector('.js-config-live-mode');
-    const source = document.querySelector('.js-config-source');
     const form = document.querySelector('.js-config-form');
     const editor = document.querySelector('.js-config-editor');
+    const mount = document.querySelector('.js-config-mount');
     const actions = document.querySelector('.js-config-actions');
     const iframe = document.querySelector('.js-iframe');
+    let jar;
     let timeout;
+
+    const highlight = (el) => {
+        el.innerHTML = hljs.highlight(el.textContent, {
+            language: 'yaml',
+            ignoreIllegals: true,
+        }).value;
+    };
+    const show = (code) => {
+        mount.textContent = code;
+        highlight(mount);
+    };
+    show(editor.value);
 
     fetch(form.action, { method: 'OPTIONS' })
         .then((response) => {
@@ -18,14 +34,41 @@ export default function () {
     liveMode.addEventListener('click', () => {
         const on = liveMode.getAttribute('aria-pressed') !== 'true';
         liveMode.setAttribute('aria-pressed', on);
-        source.hidden = on;
-        form.hidden = !on;
+        mount.setAttribute('aria-readonly', !on);
         actions.hidden = !on;
         if (on) {
-            editor.focus();
+            // YAML forbids tab indentation, and auto-closed quotes don't type over
+            jar = CodeJar(mount, highlight, {
+                tab: '  ',
+                indentOn: /:$/,
+                addClosing: false,
+            });
+            mount.style.outline = ''; // CodeJar hides the focus ring
+            jar.onUpdate((code) => {
+                // Also fires on keys that don't edit, like arrows
+                if (code === editor.value) {
+                    return;
+                }
+                editor.value = code;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => form.requestSubmit(), 500);
+            });
+            mount.focus();
         } else {
+            jar.destroy();
+            mount.removeAttribute('contenteditable');
             form.reset();
         }
+    });
+
+    // Esc then Tab leaves the editor instead of indenting
+    mount.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            jar?.updateOptions({ catchTab: false });
+        }
+    });
+    mount.addEventListener('focus', () => {
+        jar?.updateOptions({ catchTab: true });
     });
 
     // Fresh about:blank per render: document.open() keeps the old window, so
@@ -54,13 +97,9 @@ export default function () {
             .catch(() => {});
     });
 
-    editor.addEventListener('input', () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => form.requestSubmit(), 500);
-    });
-
     form.addEventListener('reset', () => {
         clearTimeout(timeout);
         iframe.contentWindow.location.replace(iframe.src);
+        show(editor.defaultValue);
     });
 }

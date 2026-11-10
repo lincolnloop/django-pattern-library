@@ -62,6 +62,8 @@ You can define a list or a dict or anything that [`PyYAML`](http://pyyaml.org/wi
 
 Click "Toggle live mode" in the "Template config" tab of the pattern library UI to make the config editable. Change the YAML there and the pattern re-renders in the preview with the edited `context` and `tags`, half a second after you stop typing. Use "Reset" to go back to the config from the YAML file, or toggle live mode off to also go back to the read-only config. Edits are only a preview: they are not saved to the YAML file, and are lost when you leave live mode or reload the page.
 
+In the editor, Enter keeps the current indentation and Tab indents; press Esc then Tab to move focus out of it.
+
 Live-editing needs the pattern library to be served by Django. In a [static export](./static-site-export.md) of the UI, the "Toggle live mode" button is hidden.
 
 ## Modifying template contexts with Python
