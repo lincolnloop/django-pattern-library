@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [1.6.0+ll.3](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.6.0+ll.3) - 2026-11-11
+
 ### Changed
 
 - The "Template config" tab is a syntax-highlighted YAML editor ([CodeJar](https://github.com/antonmedv/codejar)) that keeps indentation on Enter and indents with Tab.
@@ -10,6 +12,7 @@
 
 - Live-edit renders run the pattern's scripts in a fresh page, so scripts with top-level `const`/`let`/`class` or custom element definitions no longer break on re-render.
 - Resetting the live config no longer adds a browser history entry.
+- Code blocks no longer have a fixed width, which made the main area scroll sideways on small screens.
 - Code blocks in the pattern tabs no longer have a fixed width that caused horizontal scrolling on small screens.
 
 ## [1.6.0+ll.2](https://github.com/lincolnloop/django-pattern-library/releases/tag/v1.6.0+ll.2) - 2026-11-04
