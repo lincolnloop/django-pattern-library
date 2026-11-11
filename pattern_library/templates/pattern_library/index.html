@@ -50,10 +50,10 @@
                 </div>
 
                 <div id="tab-2" class="tabbed-content__item">
-                    <pre class="js-config-source"><code class="code yaml">{{ pattern_config }}</code></pre>
-                    <form class="js-config-form" id="pattern-config-form" method="post" action="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}" hidden>
+                    <form class="js-config-form" id="pattern-config-form" method="post" action="{% url 'pattern_library:render_pattern' pattern_template_name=pattern_template_name %}">
                         {% csrf_token %}
-                        <textarea class="code code--editor js-config-editor" name="config" spellcheck="false" rows="20" aria-label="Template config (YAML)">{{ pattern_config }}</textarea>
+                        <textarea class="js-config-editor" name="config" hidden>{{ pattern_config }}</textarea>
+                        <pre class="hljs code-editor js-config-mount" role="textbox" aria-multiline="true" aria-readonly="true" aria-label="Template config (YAML)" tabindex="0"></pre>
                     </form>
                     <button class="button button--config js-config-live-mode" type="button" aria-pressed="false" hidden>Toggle live mode</button>
                     <span class="js-config-actions" hidden>
@@ -63,7 +63,7 @@
                 </div>
 
                 <div id="tab-3" class="tabbed-content__item">
-                    <pre><code class="code django">{{ pattern_source }}</code></pre>
+                    <pre><code class="django">{{ pattern_source }}</code></pre>
                 </div>
 
                 {% block custom_tab_content %}

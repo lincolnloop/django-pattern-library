@@ -206,6 +206,8 @@ class ViewsTestCase(SimpleTestCase):
         )
         self.assertContains(response, "Toggle live mode")
         self.assertContains(response, "js-config-editor")
+        self.assertContains(response, "js-config-mount")
+        self.assertContains(response, 'aria-label="Template config (YAML)"')
         self.assertContains(response, "csrfmiddlewaretoken")
         self.assertContains(response, "title: Get started")
 
